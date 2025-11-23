@@ -65,7 +65,7 @@ public interface StudentInterface {
         String ID = Long.toString(studentID);
 
         if (studentID <= 0) {
-            throw new IllegalArgumentException("Invalid ID! ID has to be positive!")
+            throw new IllegalArgumentException("Invalid ID! ID has to be positive!");
         }
 
         if (ID.length() != 9) {
@@ -80,7 +80,7 @@ public interface StudentInterface {
                 throw new IllegalArgumentException("Invalid ID! ID must only be numbers!");
             }
         }
-            */
+        */
         
         return true;
     }
