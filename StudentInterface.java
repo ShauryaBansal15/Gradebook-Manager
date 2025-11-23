@@ -19,7 +19,7 @@ public interface StudentInterface {
 
     default boolean verifyFirstName(String firstName) throws IllegalArgumentException {
 
-        if (firstName == null) {
+        if (firstName == null || firstName.isEmpty()) {
             throw new IllegalArgumentException("First name must contain letters!");
         }
 
@@ -41,7 +41,7 @@ public interface StudentInterface {
 
     default boolean verifyLastName(String lastName) throws IllegalArgumentException {
 
-        if (lastName == null) {
+        if (lastName == null || lastName.isEmpty()) {
             throw new IllegalArgumentException("Last name must contain letters!");
         }
 
@@ -63,9 +63,16 @@ public interface StudentInterface {
 
     default boolean verifyStudentID(long studentID) {
         String ID = Long.toString(studentID);
-        if (studentID == 0) {
+
+        if (studentID <= 0) {
+            throw new IllegalArgumentException("Invalid ID! ID has to be positive!")
+        }
+
+        if (ID.length() != 9) {
             throw new IllegalArgumentException("Invalid ID! ID has to be 9 digits long");
         }
+        // Not needed since ID is already numbers
+        /*
         for (int i = 0; i < ID.length(); i++) {
             char c = ID.charAt(i);
             int ascii = (int) c;
@@ -73,8 +80,15 @@ public interface StudentInterface {
                 throw new IllegalArgumentException("Invalid ID! ID must only be numbers!");
             }
         }
+            */
         
         return true;
     }
     
+    default boolean verifyScores(ArrayList<Integer> scores) {
+        if (scores == null) {
+            throw new IllegalArgumentException("Scores cannot be null!");
+        }
+        return true;
+    }
 }
