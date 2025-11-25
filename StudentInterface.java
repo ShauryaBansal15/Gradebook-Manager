@@ -9,7 +9,7 @@ public interface StudentInterface {
     String getLastName();
 
     // Allows user to get the scores of the student
-    ArrayList<Integer> getScores();
+    ArrayList<Double> getScores();
 
     // Allows user to edit the first name of a student
     public void setFirstName(String firstName);

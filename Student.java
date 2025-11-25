@@ -4,9 +4,9 @@ public class Student implements StudentInterface {
     private String firstName;
     private String lastName;
     private final long studentID;
-    private ArrayList<Integer> scores;
+    private ArrayList<Double> scores;
 
-    public Student(String firstName, String lastName, long studentID, ArrayList<Integer> scores) {
+    public Student(String firstName, String lastName, long studentID, ArrayList<Double> scores) {
         // Verifications of the basic student information
         verifyFirstName(firstName);
         verifyLastName(lastName);
@@ -26,8 +26,12 @@ public class Student implements StudentInterface {
         return lastName;
     }
 
-    public ArrayList<Integer> getScores() {
-        return new ArrayList<>(scores);
+    public long getStudentID() {
+        return studentID;
+    }
+
+    public ArrayList<Double> getScores() {
+        return new ArrayList<Double>(scores);
     }
 
     public void setFirstName(String firstName) {
@@ -38,20 +42,21 @@ public class Student implements StudentInterface {
         this.lastName = lastName;
     }
     
-    public void setScores(ArrayList<Integer> scores) {
+    public void setScores(ArrayList<Double> scores) {
         this.scores = scores;
     }
 
-    public double getAverage(ArrayList<Integer> scores) {
-        int sum = 0;
-        for (int s : scores) {
+    public double getAverage() {
+        if (scores.isEmpty()) {
+            return 0.0;
+        }
+
+        double sum = 0;
+        for (double s : scores) {
             sum += s;
         }
 
-        double average = 0.0;
-        average = sum / scores.size();
-
-        return average;
+        return sum / scores.size();
 
     }
 }
