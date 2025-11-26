@@ -5,7 +5,7 @@ public class GradebookManager {
     private ArrayList<Student> students = new ArrayList<>();
     
 
-    // Finds a student by ID 
+    // Finds a student by ID by searching through each student in 
     public Student findStudentbyID(long studentID) {
         for (Student s : students) {
             if (s.getStudentID() == studentID) {
@@ -15,7 +15,7 @@ public class GradebookManager {
         return null;
     }
 
-    // Finds a student by name 
+    // Finds a student by full name 
     public Student findStudentByName(String firstName, String lastName) {
         for (int i = 0; i < students.size(); i++) {
             if (students.get(i).getFirstName() == firstName && students.get(i).getLastName() == lastName) {
