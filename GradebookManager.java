@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.io.*;
 
 public class GradebookManager {
     private ArrayList<Student> students = new ArrayList<>();
@@ -115,4 +116,62 @@ public class GradebookManager {
         System.out.println(students);
     }
 
+    // Writes student objects to a file in a specific format
+    public void saveToFile(String fileName) throws IOException {
+        File f = new File(fileName);
+
+        do {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(f, true));
+                for (Student s : students) {
+                    // Format of File: FirstName, LastName, ID, Scores(1|2|3|4)
+                    String holder = " ";
+                    for (int i = 0; i < s.getScores().size(); i++) {
+                        holder += Double.toString(s.getScores().get(i)) + " | ";
+                    }
+                    
+                    writer.write(s.getFirstName() + ", " + s.getLastName() + ", " 
+                    + s.getStudentID() + ", " + "Scores: " + holder);
+                    writer.newLine();
+                }
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } while (!fileName.isEmpty());
+        
+    }
+
+    // Reads student data from a file 
+    public void loadFromFile(String fileName) {
+        File f = new File(fileName);
+
+        do {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(f));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    long studentID = Long.parseLong(parts[0]);
+                    String firstName = parts[1];
+                    String lastName = parts[2];
+
+                    //. Getting each score from the third element of parts 
+                    // This ArrayList is added as the scores of a student
+                    ArrayList<Double> scoresList = new ArrayList<>();
+                    if (parts.length > 3 && !parts[3].isEmpty()) {
+                        String[] scores =  parts[3].split(" | ");
+                        for (String score : scores) {
+                            scoresList.add(Double.parseDouble(score));
+                        }
+                    }
+
+                    students.add(new Student(firstName, lastName, studentID, scoresList));
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (!fileName.isEmpty());
+    }
 }

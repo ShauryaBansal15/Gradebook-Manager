@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Student implements StudentInterface {
+public class Student implements StudentInterface, Serializable {
     private String firstName;
     private String lastName;
     private final long studentID;
