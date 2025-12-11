@@ -138,7 +138,7 @@ public class GradebookManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } while (!fileName.isEmpty());
+        } while (fileName.equals(fileName));
         
     }
 
@@ -151,6 +151,7 @@ public class GradebookManager {
                 BufferedReader reader = new BufferedReader(new FileReader(f));
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    // Separates each part into the array based on Student info format 
                     String[] parts = line.split(",");
                     long studentID = Long.parseLong(parts[0]);
                     String firstName = parts[1];
@@ -172,6 +173,6 @@ public class GradebookManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } while (!fileName.isEmpty());
+        } while (fileName.equals(fileName));
     }
 }
