@@ -103,12 +103,13 @@ public class GradebookManager {
 
     // Gets the total amount of students from the ArrayList of students
     public int getTotalStudents() {
-        int counter = 0;
-        // Traversing each student in the list
-        for (int i = 0; i < students.size(); i++) {
-            counter++;
-        }
-        return counter;
+        return students.size(); // Much simpler rather than iterating through the list
+        // int counter = 0;
+        // // Traversing each student in the list
+        // for (int i = 0; i < students.size(); i++) {
+        //     counter++;
+        // }
+        // return counter;
     }
     
     // Prints out all the students from the ArrayList
@@ -120,25 +121,23 @@ public class GradebookManager {
     public void saveToFile(String fileName) throws IOException {
         File f = new File(fileName);
 
-        do {
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(f, true));
-                for (Student s : students) {
-                    // Format of File: FirstName, LastName, ID, Scores(1|2|3|4)
-                    String holder = " ";
-                    for (int i = 0; i < s.getScores().size(); i++) {
-                        holder += Double.toString(s.getScores().get(i)) + " | ";
-                    }
-                    
-                    writer.write(s.getFirstName() + ", " + s.getLastName() + ", " 
-                    + s.getStudentID() + ", " + "Scores: " + holder);
-                    writer.newLine();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+            for (Student s : students) {
+
+                // Format of File: FirstName, LastName, ID, Scores(1|2|3|4)
+                String holder = " ";
+                for (int i = 0; i < s.getScores().size(); i++) {
+                    holder += Double.toString(s.getScores().get(i)) + " | ";
                 }
-                writer.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+                writer.write(s.getFirstName() + ", " + s.getLastName() + ", " 
+                + s.getStudentID() + ", " + "Scores: " + holder);
+                writer.newLine();
             }
-        } while (fileName.equals(fileName));
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
     }
 
@@ -146,33 +145,36 @@ public class GradebookManager {
     public void loadFromFile(String fileName) {
         File f = new File(fileName);
 
-        do {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(f));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Separates each part into the array based on Student info format 
-                    String[] parts = line.split(",");
-                    long studentID = Long.parseLong(parts[0]);
-                    String firstName = parts[1];
-                    String lastName = parts[2];
+        if (!f.exists()) {
+            System.out.println("File not found: " + fileName);
+            return;
+        }
 
-                    //. Getting each score from the third element of parts 
-                    // This ArrayList is added as the scores of a student
-                    ArrayList<Double> scoresList = new ArrayList<>();
-                    if (parts.length > 3 && !parts[3].isEmpty()) {
-                        String[] scores =  parts[3].split(" | ");
-                        for (String score : scores) {
-                            scoresList.add(Double.parseDouble(score));
-                        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(f));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Separates each part into the array based on Student info format 
+                String[] parts = line.split(",");
+                String firstName = parts[0];
+                String lastName = parts[1];
+                long studentID = Long.parseLong(parts[2]);
+
+                //. Getting each score from the third element of parts 
+                // This ArrayList is added as the scores of a student
+                ArrayList<Double> scoresList = new ArrayList<>();
+                if (parts.length > 3 && !parts[3].isEmpty()) {
+                    String[] scores =  parts[3].split(" \\| ");
+                    for (String score : scores) {
+                        scoresList.add(Double.parseDouble(score));
                     }
-
-                    students.add(new Student(firstName, lastName, studentID, scoresList));
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                students.add(new Student(firstName, lastName, studentID, scoresList));
             }
-        } while (fileName.equals(fileName));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
