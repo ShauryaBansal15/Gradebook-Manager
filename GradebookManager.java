@@ -156,6 +156,9 @@ public class GradebookManager {
             while ((line = reader.readLine()) != null) {
                 // Separates each part into the array based on Student info format 
                 String[] parts = line.split(",");
+
+                if (parts.length < 3) continue; // This will skip any invalid lines when reading
+
                 String firstName = parts[0];
                 String lastName = parts[1];
                 long studentID = Long.parseLong(parts[2]);
@@ -164,13 +167,14 @@ public class GradebookManager {
                 // This ArrayList is added as the scores of a student
                 ArrayList<Double> scoresList = new ArrayList<>();
                 if (parts.length > 3 && !parts[3].isEmpty()) {
-                    String[] scores =  parts[3].split(" \\| ");
+                    String[] scores =  parts[3].split("\\|");
                     for (String score : scores) {
                         scoresList.add(Double.parseDouble(score));
                     }
                 }
 
                 students.add(new Student(firstName, lastName, studentID, scoresList));
+                reader.close();
             }
 
         } catch (IOException e) {
