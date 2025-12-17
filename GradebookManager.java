@@ -121,8 +121,7 @@ public class GradebookManager {
     public void saveToFile(String fileName) throws IOException {
         File f = new File(fileName);
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f));){
             for (Student s : students) {
 
                 // Format of File: FirstName, LastName, ID, Scores(1|2|3|4)
@@ -150,8 +149,7 @@ public class GradebookManager {
             return;
         }
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(f));
+        try (BufferedReader reader = new BufferedReader(new FileReader(f));) {
             String line;
             while ((line = reader.readLine()) != null) {
                 // Separates each part into the array based on Student info format 
