@@ -1,13 +1,66 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 
+ * This class allows a single User to manipulate and access students 
+ * in the gradebook. There are multiple methods that allow the driver 
+ * to run smoothly and effectively.
+ * 
+ * @author Shaurya Bansal 
+ * @version 12/19/2025
+ */
+
+
 public class Driver {
 
     private static GradebookManager manager = new GradebookManager();
+    private static Scanner input = new Scanner(System.in);
+    private static String username;
+
     
     public static void main(String[] args) {
 
+        welcomeMessage();
 
+        for (int i = 0; i < 20; i++) {
+            System.out.println();
+        }
+        System.out.println("Select an option 0-10");
+
+        boolean running = true; 
+        while (running) {
+            displayMenu();
+        int selection = input.nextInt();
+
+        switch(selection) {
+            case 0: 
+                running = false;
+                System.out.println("Thank you for using the Gradebook Manager!");
+                break;
+            case 1: 
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                displayAllStudents();
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+        }
+
+        }
+
+    }
+
+    // Basic welcome message to welcome the User 
+    private static void welcomeMessage() {
+        System.out.println("Greetings User!");
+        System.out.print("Please put down your full name on one line.");
+        username = input.nextLine();
+        System.out.println("Welcome " + username + "!");
     }
 
     // Basic main menu that displays to the User via console
@@ -26,5 +79,33 @@ public class Driver {
         System.out.println("0. Exit");
         System.out.println("========================================");
     }
+
+    // This method will allow the User to add a student to the gradebook
+    private static void addStudent() {
+
+    }
+
+
+    // This method displays all students inside the gradebook database
+    private static void displayAllStudents() {
+        System.out.println("\n--- All Students ---");
+        ArrayList<Student> students = manager.getAllStudents();
+
+        if (students.isEmpty()) {
+            System.out.println("No students currently in the gradebook.");
+            return;
+        }
+
+        // This displays the students in the specific format
+        System.out.printf("%-12s %-15s %-15s %-10s%n", "ID", "First Name", "Last Name", "Average");
+        System.out.println("--------------------------------------------------------");
+        for (Student s : students) {
+            System.out.printf("%-12d %-15s %-15s %10.2f%n", 
+            s.getStudentID(), s.getFirstName(), s.getLastName(), s.getAverage());
+        }
+
+    }
+
+
 
 }
