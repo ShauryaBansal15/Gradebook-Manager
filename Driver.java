@@ -42,15 +42,25 @@ public class Driver {
             case 1: 
                 addStudent();
             case 2:
+                removeStudent();
             case 3:
+                findStudentByID();
             case 4:
+                findStudentByName();
             case 5:
                 displayAllStudents();
             case 6:
+                sortByName();
             case 7:
+                sortByGrade();
             case 8:
+                viewStatistics();
             case 9:
+                saveToFile();
             case 10:
+                loadFromFile();
+            default:
+                
         }
 
         }
@@ -157,7 +167,15 @@ public class Driver {
     }
 
     private static void viewStatistics() {
-        
+
+    }
+
+    private static void saveToFile() {
+
+    }
+
+    private static void loadFromFile() {
+
     }
 
 }
