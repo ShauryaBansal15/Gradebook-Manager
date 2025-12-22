@@ -32,38 +32,56 @@ public class Driver {
         boolean running = true; 
         while (running) {
             displayMenu();
-        int selection = input.nextInt();
+            int selection = input.nextInt();
 
-        switch(selection) {
-            case 0: 
-                running = false;
-                System.out.println("Thank you for using the Gradebook Manager!");
-                break;
-            case 1: 
-                addStudent();
-            case 2:
-                removeStudent();
-            case 3:
-                findStudentByID();
-            case 4:
-                findStudentByName();
-            case 5:
-                displayAllStudents();
-            case 6:
-                sortByName();
-            case 7:
-                sortByGrade();
-            case 8:
-                viewStatistics();
-            case 9:
-                saveToFile();
-            case 10:
-                loadFromFile();
-            default:
-                
+            switch(selection) {
+                case 0: 
+                    System.out.println("Save before exiting? (y or n): ");
+                    if (input.nextLine().equalsIgnoreCase("y")) {
+                        saveToFile();
+                    }
+                    System.out.println("Thank you for using the Gradebook Manager!");
+                    running = false;
+                    break;
+                case 1: 
+                    addStudent();
+                    break;
+                case 2:
+                    removeStudent();
+                    break;
+                case 3:
+                    findStudentByID();
+                    break;
+                case 4:
+                    findStudentByName();
+                    break;
+                case 5:
+                    displayAllStudents();
+                    break;
+                case 6:
+                    sortByName();
+                    break;
+                case 7:
+                    sortByGrade();
+                    break;
+                case 8:
+                    viewStatistics();
+                    break;
+                case 9:
+                    saveToFile();
+                    break;
+                case 10:
+                    loadFromFile();
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+                    
+            }
+
+            System.out.println();
         }
 
-        }
+        input.close();
 
     }
 
