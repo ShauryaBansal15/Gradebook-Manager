@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * 
@@ -39,6 +40,7 @@ public class Driver {
                 System.out.println("Thank you for using the Gradebook Manager!");
                 break;
             case 1: 
+                addStudent();
             case 2:
             case 3:
             case 4:
@@ -82,9 +84,49 @@ public class Driver {
 
     // This method will allow the User to add a student to the gradebook
     private static void addStudent() {
+        System.out.println("Enter first name:");
+        String firstName = input.nextLine();
+
+        System.out.println("Enter last name");
+        String lastName = input.nextLine();
+
+        // Experimenting with generating random Student ID's
+        long max = 100_000_000_000L;
+        long min = 100_000_000L;
+
+        Random random = new Random();
+
+        long studentID = min + (long)(random.nextDouble() * (max - min));
+
+        ArrayList<Double> scores = new ArrayList<>();
+        System.out.println("Enter scores of the student(click enter if " + 
+        "no scores need to be added):");
+
+        while (input.hasNextDouble()) {
+            scores.add(input.nextDouble());
+        }
+
+        // Try catch to see if student is valid
+        try {
+            Student student = new Student(firstName, lastName, studentID, scores);
+            manager.addStudent(student);
+            System.out.println("Student added successfully!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    private static void removeStudent() {
+        System.out.println();
+    }
+
+    private static void findStudentByID() {
 
     }
 
+    private static void findStudentByName() {
+
+    }
 
     // This method displays all students inside the gradebook database
     private static void displayAllStudents() {
@@ -106,6 +148,16 @@ public class Driver {
 
     }
 
+    private static void sortByName() {
 
+    }
+
+    private static void sortByGrade() {
+
+    }
+
+    private static void viewStatistics() {
+        
+    }
 
 }
