@@ -9,7 +9,7 @@ import java.util.Random;
  * to run smoothly and effectively.
  * 
  * @author Shaurya Bansal 
- * @version 12/22/2025
+ * @version 12/24/2025
  */
 
 
@@ -144,8 +144,11 @@ public class Driver {
         }
     }
 
-    private static void removeStudent() {
+    private static void removeStudent(Student s) {
         System.out.println();
+        try {
+            manager.removeStudent(s);
+        } catch ()
     }
 
     private static void findStudentByID() {
@@ -177,7 +180,15 @@ public class Driver {
     }
 
     private static void sortByName() {
+        ArrayList<Student> holder = manager.getAllStudents();
+        if (holder.size() == 0) {
+            System.out.println("There are no students available!");
+        }
 
+        manager.sortByFirstName();
+        for (Student s : manager.getAllStudents()) {
+            System.out.println(s);
+        }
     }
 
     private static void sortByGrade() {
