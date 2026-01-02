@@ -9,7 +9,7 @@ import java.util.Random;
  * to run smoothly and effectively.
  * 
  * @author Shaurya Bansal 
- * @version 12/24/2025
+ * @version 1/2/2026
  */
 
 
@@ -22,6 +22,7 @@ public class Driver {
     
     public static void main(String[] args) {
 
+        // Welcome message 
         welcomeMessage();
 
         for (int i = 0; i < 20; i++) {
@@ -29,6 +30,8 @@ public class Driver {
         }
         System.out.println("Select an option 0-10");
 
+
+        // Main loop that runs the application
         boolean running = true; 
         while (running) {
             displayMenu();
@@ -144,19 +147,49 @@ public class Driver {
         }
     }
 
-    private static void removeStudent(Student s) {
-        System.out.println();
-        try {
-            manager.removeStudent(s);
-        } catch ()
+    // Method that displays current Students and asks user which to remove from list
+    private static void removeStudent() {
+        System.out.println("\n--- Remove Student ---");
+        System.out.println("Enter a Student ID: ");
+        long studentID = input.nextLong();
+
+        Student student = manager.findStudentbyID(studentID);
+        if (student != null) {
+            manager.removeStudent(student);
+            System.out.println("Student removed: " + student.getFirstName() + " " + student.getLastName());
+        } else {
+            System.out.println("Student not found.");
+        }
     }
 
+    // This method searches for a Student based on input of ID
     private static void findStudentByID() {
+        System.out.println("\n--- Search Student by ID ---");
+        System.out.println("Enter a Student ID");
+        long studentID = input.nextLong();
 
+        Student student = manager.findStudentbyID(studentID);
+        if (student != null) {
+            System.out.println(student);
+        } else {
+            System.out.println("Student not found.");
+        }
     }
 
+    // This method searches for a Student based on input of first and last name
     private static void findStudentByName() {
+        System.out.println("\n--- Search Student by ID ---");
+        System.out.println("Enter a Student's first name: ");
+        String firstName = input.nextLine();
+        System.out.println("Enter Student last name: ");
+        String lastName = input.nextLine();
 
+        Student student = manager.findStudentByName(firstName, lastName);
+        if (student != null) {
+            System.out.println("Student found: " + student.getFirstName() + " " + student.getLastName());
+        } else {
+            System.out.println("Student not found.");
+        }
     }
 
     // This method displays all students inside the gradebook database
@@ -179,6 +212,7 @@ public class Driver {
 
     }
 
+    // This method sorts the list of Students by their name and prints it to the console
     private static void sortByName() {
         ArrayList<Student> holder = manager.getAllStudents();
         if (holder.size() == 0) {
@@ -186,13 +220,22 @@ public class Driver {
         }
 
         manager.sortByFirstName();
-        for (Student s : manager.getAllStudents()) {
+        for (Student s : holder) {
             System.out.println(s);
         }
     }
 
+    // This method sorts the list of Students by their grade average and prints it to the console
     private static void sortByGrade() {
+        ArrayList<Student> holder = manager.getAllStudents();
+        if (holder.size() == 0) {
+            System.out.println("There are no students available!");
+        }
 
+        manager.sortByGrade();
+        for (Student s : holder) {
+            System.out.println(s);
+        }
     }
 
     private static void viewStatistics() {
