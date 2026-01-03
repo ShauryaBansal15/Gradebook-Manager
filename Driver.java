@@ -15,9 +15,8 @@ import java.util.Random;
 
 public class Driver {
 
-    private static GradebookManager manager = new GradebookManager();
-    private static Scanner input = new Scanner(System.in);
-    private static String username;
+    private static GradebookManager manager = new GradebookManager(); // Manager object that maniupulates students
+    private static Scanner input = new Scanner(System.in); // Scanner for user input
 
     
     public static void main(String[] args) {
@@ -90,11 +89,11 @@ public class Driver {
         System.out.println("Greetings User!");
         System.out.print("Please put down your full name on one line.");
         System.out.println();
-        username = input.nextLine();
+        String fullName = input.nextLine();
         for (int i = 0; i < 10; i++) {
             System.out.println();
         }
-        System.out.println("Welcome, " + username + "!");
+        System.out.println("Welcome, " + fullName + "!");
     }
 
     // Basic main menu that displays to the User via console
@@ -111,7 +110,7 @@ public class Driver {
         System.out.println("9. Save to file");
         System.out.println("10. Load from file");
         System.out.println("0. Exit");
-        System.out.println("========================================");
+        System.out.println("=================================================");
     }
 
     // This method will allow the User to add a student to the gradebook
@@ -301,6 +300,7 @@ public class Driver {
 
         manager.loadFromFile(fileName);
         System.out.println("Loaded " + manager.getTotalStudents() + " students.");
+
     }
 
 }
