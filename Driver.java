@@ -24,10 +24,6 @@ public class Driver {
 
         // Welcome message 
         welcomeMessage();
-
-        for (int i = 0; i < 20; i++) {
-            System.out.println();
-        }
         System.out.println("Select an option 0-10");
 
 
@@ -40,6 +36,7 @@ public class Driver {
             switch(selection) {
                 case 0: 
                     System.out.println("Save before exiting? (y or n): ");
+                    input.nextLine();
                     if (input.nextLine().equalsIgnoreCase("y")) {
                         saveToFile();
                     }
@@ -92,8 +89,12 @@ public class Driver {
     private static void welcomeMessage() {
         System.out.println("Greetings User!");
         System.out.print("Please put down your full name on one line.");
+        System.out.println();
         username = input.nextLine();
-        System.out.println("Welcome " + username + "!");
+        for (int i = 0; i < 10; i++) {
+            System.out.println();
+        }
+        System.out.println("Welcome, " + username + "!");
     }
 
     // Basic main menu that displays to the User via console
@@ -115,26 +116,36 @@ public class Driver {
 
     // This method will allow the User to add a student to the gradebook
     private static void addStudent() {
-        System.out.println("Enter first name:");
+        input.nextLine();
+        System.out.println("\n--- Add Student ---");
+
+        System.out.println("Enter first name: ");
         String firstName = input.nextLine();
 
-        System.out.println("Enter last name");
+        System.out.println("Enter last name: ");
         String lastName = input.nextLine();
 
         // Experimenting with generating random Student ID's
-        long max = 100_000_000_000L;
+        long max = 999_999_999L;
         long min = 100_000_000L;
 
         Random random = new Random();
-
         long studentID = min + (long)(random.nextDouble() * (max - min));
 
         ArrayList<Double> scores = new ArrayList<>();
-        System.out.println("Enter scores of the student(click enter if " + 
-        "no scores need to be added):");
+        System.out.println("Enter scores separated by spaces(or press Enter to skip): ");
+        String scoresInput = input.nextLine();
 
-        while (input.hasNextDouble()) {
-            scores.add(input.nextDouble());
+        if (!scoresInput.trim().isEmpty()) {
+            String[] scoreStrings = scoresInput.trim().split("\\s+");
+            for (String score : scoreStrings) {
+                try {
+                    scores.add(Double.parseDouble(score));
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid score: " + score + " (skipped)");
+                }
+            }
         }
 
         // Try catch to see if student is valid
@@ -143,7 +154,7 @@ public class Driver {
             manager.addStudent(student);
             System.out.println("Student added successfully!");
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e);
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -164,13 +175,17 @@ public class Driver {
 
     // This method searches for a Student based on input of ID
     private static void findStudentByID() {
+        input.nextLine();
         System.out.println("\n--- Search Student by ID ---");
+
         System.out.println("Enter a Student ID");
         long studentID = input.nextLong();
 
         Student student = manager.findStudentbyID(studentID);
         if (student != null) {
-            System.out.println(student);
+            System.out.println("Student found: " + student.getFirstName() + " " + student.getLastName());
+            System.out.println("Student ID: " + student.getStudentID());
+            System.out.println("Class Average: " + student.getAverage());
         } else {
             System.out.println("Student not found.");
         }
@@ -178,7 +193,9 @@ public class Driver {
 
     // This method searches for a Student based on input of first and last name
     private static void findStudentByName() {
+        input.nextLine();
         System.out.println("\n--- Search Student by ID ---");
+
         System.out.println("Enter a Student's first name: ");
         String firstName = input.nextLine();
         System.out.println("Enter Student last name: ");
@@ -187,6 +204,8 @@ public class Driver {
         Student student = manager.findStudentByName(firstName, lastName);
         if (student != null) {
             System.out.println("Student found: " + student.getFirstName() + " " + student.getLastName());
+            System.out.println("Student ID: " + student.getStudentID());
+            System.out.println("Class Average: " + student.getAverage());
         } else {
             System.out.println("Student not found.");
         }
@@ -239,15 +258,49 @@ public class Driver {
     }
 
     private static void viewStatistics() {
+        System.out.println("\n--- Class Statistics ---");
+        System.out.println("Total students: " + manager.getTotalStudents());
+        System.out.println("Class average: " + String.format("%.2f", manager.getClassAverage()));
 
+        Student topStudent = manager.getTopStudent();
+        if (topStudent != null) {
+            System.out.println("Top Student: " + topStudent.getFirstName() + " " + topStudent.getLastName() + 
+        " (" + String.format("%.2f", topStudent.getAverage()) + ") ");
+
+        }
     }
 
     private static void saveToFile() {
+        System.out.println("\n--- Save to File---");
 
+        System.out.println("Enter file name (default: database.txt): ");
+        String fileName = input.nextLine().trim();
+
+        if (fileName.isEmpty()) {
+            fileName = "Database.txt";
+        }
+
+        try {
+            manager.saveToFile(fileName);
+            System.out.println("Gradebook saved to " + fileName + ".");
+        } catch (Exception e) {
+            System.out.println("Error saving file: " + e.getMessage());
+        }
     }
 
     private static void loadFromFile() {
+        input.nextLine();
+        System.out.println("\n--- Load from File ---");
 
+        System.out.println("Enter file name (default: database.txt): ");
+        String fileName = input.nextLine().trim();
+
+        if (fileName.isEmpty()) {
+            fileName = "database.txt";
+        }
+
+        manager.loadFromFile(fileName);
+        System.out.println("Loaded " + manager.getTotalStudents() + " students.");
     }
 
 }

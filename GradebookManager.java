@@ -163,17 +163,21 @@ public class GradebookManager {
 
                 if (parts.length < 3) continue; // This will skip any invalid lines when reading
 
-                String firstName = parts[0];
-                String lastName = parts[1];
-                long studentID = Long.parseLong(parts[2]);
+                String firstName = parts[0].trim();
+                String lastName = parts[1].trim();
+                long studentID = Long.parseLong(parts[2].trim());
 
                 //. Getting each score from the third element of parts 
                 // This ArrayList is added as the scores of a student
                 ArrayList<Double> scoresList = new ArrayList<>();
                 if (parts.length > 3 && !parts[3].isEmpty()) {
-                    String[] scores =  parts[3].split("\\|");
+                    String scoresStr = parts[3].replace("Scores: ", "").trim();
+                    String[] scores =  scoresStr.split("\\|");
                     for (String score : scores) {
-                        scoresList.add(Double.parseDouble(score));
+                        String trimmed = score.trim();
+                        if (!trimmed.isEmpty()) {
+                            scoresList.add(Double.parseDouble(trimmed));
+                        }
                     }
                 }
 
