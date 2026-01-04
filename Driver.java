@@ -270,6 +270,7 @@ public class Driver {
     }
 
     private static void saveToFile() {
+        input.nextLine();
         System.out.println("\n--- Save to File---");
 
         System.out.println("Enter file name (default: database.txt): ");
