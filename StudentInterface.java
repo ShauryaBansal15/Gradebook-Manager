@@ -85,7 +85,7 @@ public interface StudentInterface {
         return true;
     }
     
-    default boolean verifyScores(ArrayList<Integer> scores) {
+    default boolean verifyScores(ArrayList<Double> scores) {
         if (scores == null) {
             throw new IllegalArgumentException("Scores cannot be null!");
         }

@@ -182,8 +182,8 @@ public class GradebookManager {
                 }
 
                 students.add(new Student(firstName, lastName, studentID, scoresList));
-                reader.close();
             }
+            reader.close();
 
         } catch (IOException e) {
             e.printStackTrace();

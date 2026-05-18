@@ -9,15 +9,14 @@ import java.util.Random;
  * to run smoothly and effectively.
  * 
  * @author Shaurya Bansal 
- * @version 1/2/2026
+ * @version 1/4/2026
  */
 
 
 public class Driver {
 
-    private static GradebookManager manager = new GradebookManager();
-    private static Scanner input = new Scanner(System.in);
-    private static String username;
+    private static GradebookManager manager = new GradebookManager(); // Manager object that maniupulates students
+    private static Scanner input = new Scanner(System.in); // Scanner for user input
 
     
     public static void main(String[] args) {
@@ -90,11 +89,11 @@ public class Driver {
         System.out.println("Greetings User!");
         System.out.print("Please put down your full name on one line.");
         System.out.println();
-        username = input.nextLine();
+        String fullName = input.nextLine();
         for (int i = 0; i < 10; i++) {
             System.out.println();
         }
-        System.out.println("Welcome, " + username + "!");
+        System.out.println("Welcome, " + fullName + "!");
     }
 
     // Basic main menu that displays to the User via console
@@ -111,7 +110,7 @@ public class Driver {
         System.out.println("9. Save to file");
         System.out.println("10. Load from file");
         System.out.println("0. Exit");
-        System.out.println("========================================");
+        System.out.println("=================================================");
     }
 
     // This method will allow the User to add a student to the gradebook
@@ -182,6 +181,9 @@ public class Driver {
         long studentID = input.nextLong();
 
         Student student = manager.findStudentbyID(studentID);
+        for (int i = 0; i < 3; i++) {
+            System.out.println();
+        }
         if (student != null) {
             System.out.println("Student found: " + student.getFirstName() + " " + student.getLastName());
             System.out.println("Student ID: " + student.getStudentID());
@@ -194,7 +196,7 @@ public class Driver {
     // This method searches for a Student based on input of first and last name
     private static void findStudentByName() {
         input.nextLine();
-        System.out.println("\n--- Search Student by ID ---");
+        System.out.println("\n--- Search Student by Name ---");
 
         System.out.println("Enter a Student's first name: ");
         String firstName = input.nextLine();
@@ -202,6 +204,9 @@ public class Driver {
         String lastName = input.nextLine();
 
         Student student = manager.findStudentByName(firstName, lastName);
+        for (int i = 0; i < 3; i++) {
+            System.out.println();
+        }
         if (student != null) {
             System.out.println("Student found: " + student.getFirstName() + " " + student.getLastName());
             System.out.println("Student ID: " + student.getStudentID());
@@ -257,6 +262,7 @@ public class Driver {
         }
     }
 
+    // This method provides the user with class statistics 
     private static void viewStatistics() {
         System.out.println("\n--- Class Statistics ---");
         System.out.println("Total students: " + manager.getTotalStudents());
@@ -270,7 +276,9 @@ public class Driver {
         }
     }
 
+    // This method allows the user to save to any file of their liking
     private static void saveToFile() {
+        input.nextLine();
         System.out.println("\n--- Save to File---");
 
         System.out.println("Enter file name (default: database.txt): ");
@@ -288,6 +296,7 @@ public class Driver {
         }
     }
 
+    // This method can load data from a user input file
     private static void loadFromFile() {
         input.nextLine();
         System.out.println("\n--- Load from File ---");
@@ -301,6 +310,7 @@ public class Driver {
 
         manager.loadFromFile(fileName);
         System.out.println("Loaded " + manager.getTotalStudents() + " students.");
+
     }
 
 }

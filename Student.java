@@ -12,6 +12,7 @@ public class Student implements StudentInterface, Serializable {
         verifyFirstName(firstName);
         verifyLastName(lastName);
         verifyStudentID(studentID);
+        verifyScores(scores);
 
         this.firstName = firstName;
         this.lastName = lastName;
