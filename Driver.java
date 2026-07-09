@@ -238,14 +238,14 @@ public class Driver {
 
     // This method sorts the list of Students by their name and prints it to the console
     private static void sortByName() {
-        ArrayList<Student> holder = manager.getAllStudents();
-        if (holder.size() == 0) {
+        ArrayList<Student> studentList = manager.getAllStudents();
+        if (studentList.size() == 0) {
             System.out.println("There are no students available!");
         }
 
         manager.sortByFirstName();
-        for (Student s : holder) {
-            System.out.println(s);
+        for (Student s : studentList) {
+            System.out.println(s.getFirstName());
         }
     }
 
