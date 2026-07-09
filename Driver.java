@@ -175,6 +175,14 @@ public class Driver {
     // This method searches for a Student based on input of ID
     private static void findStudentByID() {
         input.nextLine();
+
+        if (manager.getTotalStudents() == 0) {
+            System.out.println("There are no students in the gradebook.");
+            for (int i = 0; i < 5; i++) {
+                System.out.println();
+            }
+            return;
+        }
         System.out.println("\n--- Search Student by ID ---");
 
         System.out.println("Enter a Student ID");
@@ -196,6 +204,15 @@ public class Driver {
     // This method searches for a Student based on input of first and last name
     private static void findStudentByName() {
         input.nextLine();
+
+        if (manager.getTotalStudents() == 0) {
+            System.out.println("There are no students in the gradebook.");
+            for (int i = 0; i < 5; i++) {
+                System.out.println();
+            }
+            return;
+        }
+
         System.out.println("\n--- Search Student by Name ---");
 
         System.out.println("Enter a Student's first name: ");
