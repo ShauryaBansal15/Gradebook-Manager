@@ -159,7 +159,13 @@ public class Driver {
 
     // Method that displays current Students and asks user which to remove from list
     private static void removeStudent() {
+
         System.out.println("\n--- Remove Student ---");
+        if (manager.getTotalStudents() == 0) {
+            System.out.println("There are no students in the gradebook.");
+            return;
+        }
+
         System.out.println("Enter a Student ID: ");
         long studentID = input.nextLong();
 
@@ -175,16 +181,16 @@ public class Driver {
     // This method searches for a Student based on input of ID
     private static void findStudentByID() {
         input.nextLine();
-
+        
+        System.out.println("\n--- Search Student by ID ---");
         if (manager.getTotalStudents() == 0) {
             System.out.println("There are no students in the gradebook.");
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 3; i++) {
                 System.out.println();
             }
             return;
         }
-        System.out.println("\n--- Search Student by ID ---");
-
+        
         System.out.println("Enter a Student ID");
         long studentID = input.nextLong();
 
